@@ -12,7 +12,8 @@ createAdHocNetwork() {
 	echo "Creating Ad-Hoc Network"
 	iwconfig wlan0 mode Ad-Hoc essid GrowStuff key off
 	ifconfig wlan0 192.168.0.1 broadcast 192.168.0.255 netmask 255.255.255.0
-	service isc-dhcp-server start
+	sleep 3
+	service isc-dhcp-server restart
 	echo "Network GrowStuff created"
 }
 
@@ -42,6 +43,7 @@ else
 	elif [ ! -f  wpa_supplicant.conf ]; then 	#so we directly go for the ad-hoc network
 		./blink.sh blink
 		createAdHocNetwork
+		
 	#In the other case, we connect
 	else
 		./blink.sh on
@@ -52,8 +54,8 @@ else
 	do
 		sleep 30 #Waiting 30 seconds  before we check the connection state
 		count=$(ping -c 1 www.google.com | awk -F, '/received/{print $2*1}')	#Trying to ping google
-		if [ $count -ne 1 ] ; then	# If failed setting up ad-hoc
-			./blink blink
+		if [ "$count" != "1" ] ; then	# If failed setting up ad-hoc
+			./blink.sh blink
 			echo "Connection status : OFFLINE"
 			createAdHocNetwork
 			sleep 120	# Waiting two minutes before retrying the connection
