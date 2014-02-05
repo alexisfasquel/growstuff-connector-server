@@ -1,7 +1,10 @@
 #!/bin/sh
 
 
-test() {
+blink() {
+	if [ "$(pgrep blink | wc -l)" != "2" ]; then
+		exit 0		#If already blinking then exiting
+	fi
 	while [ 1 ]
 		do
 		echo 0 > /sys/class/gpio/gpio11/value
@@ -13,17 +16,14 @@ test() {
 
 on() {
 	echo 0 > /sys/class/gpio/gpio11/value
-	if [ "$(pgrep blink)" != " " ]; then
-		pkill blink & > /dev/null
-	fi
+	pkill blink > /dev/null		# In any case, killing everyone
 }
 
 #Definitly not perfect, but works well with just one blink process running
 off() {
-	echo 1 > /sys/class/gpio/gpio11/value	
-	if [ "$(pgrep blink)" != " " ]; then
-		pkill blink & > /dev/null
-	fi
+	echo 1 > /sys/class/gpio/gpio11/value
+	pkill blink > /dev/null		# In any case, killing everyone
+
 }
 
 config() {
@@ -31,7 +31,7 @@ config() {
 	echo out > /sys/class/gpio/gpio11/direction
 }
 
-if [ ! -f /sys/class/gpio/gpio11/direction ]; then 
+if [ ! -f /sys/class/gpio/gpio11/direction ]; then
 	config
 fi
 
@@ -43,6 +43,6 @@ elif [ "$1" = "off" ]; then
 	off
 elif [ "$1" = "blink" ]; then
 	#echo "blinking"
-	test & > /dev/null
+	blink & > /dev/null
 fi
 
