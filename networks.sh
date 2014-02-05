@@ -13,16 +13,17 @@ createAdHocNetwork() {
 	iwconfig wlan0 mode Ad-Hoc essid GrowStuff key off
 	ifconfig wlan0 192.168.0.1 broadcast 192.168.0.255 netmask 255.255.255.0
 	sleep 3
-	service isc-dhcp-server restart
+	service isc-dhcp-server restart		#starting the dhcp server
 	echo "Network GrowStuff created"
 }
 
 
 connectToWifi() {
 	echo "Connecting to wifi..."
-	pkill wpa_supplicant
+	pkill wpa_supplicant		#killing all wpa process before to start a new one
 	wpa_supplicant -B -iwlan0 -cwpa_supplicant.conf & > /dev/null 2>&1
-	dhclient wlan0
+	service isc-dhcp-server stop	#Stoping the dhcp server
+	dhclient wlan0 -r
 }
 
 if [ $(whoami) != "root" ]; then
@@ -35,7 +36,6 @@ else
 		echo "Setting up the new configuration"
 		wpa_passphrase $1 $2 > wpa_supplicant.conf		#updating the wpa conf file with the new network credentials
 		cat wpa_supplicant.conf		#Displaying the new config
-
 		connectToWifi
 		exit 0		#connecting and exiting, so that we leave the main deamon do hisjob
 
