@@ -5,11 +5,22 @@
 
 We're editing the interfaces config files :
 
-sudo nano /etc/network/interfaces
+    sudo nano /etc/network/interfaces
 
 To put the following configuration :
 
+    #start interfaces upon start of the system
+    auto lo wlan0
+    # register loopback interface
+    iface lo inet loopback
 
+    # use dhcp and allow interface to be started when kernel detects a hotplug event
+    allow-hotplug eth0
+    iface eth0 inet dhcp
+ 
+    # use manual ip configuration for wlan0 interface and allow hotplug as well
+    allow-hotplug wlan0
+    iface wlan0 inet manual
 
 
 #Installing the dchp server
@@ -20,11 +31,11 @@ To put the following configuration :
 #Configuring the dchcp server
 
 We need to edit the init script...
-    
+
     sudo nano /etc/default/isc-dhcp-server
     
 ...to put the right interface :
-    
+
     INTERFACES="wlan0"
    
 Then we remove and create a new config file for the server...
