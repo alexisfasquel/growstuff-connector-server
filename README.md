@@ -1,6 +1,17 @@
 # Usage
 
 
+# Setting up the general config of the differents interfaces
+
+We're editing the interfaces config files :
+
+sudo nano /etc/network/interfaces
+
+To put the following configuration :
+
+
+
+
 #Installing the dchp server
 
     sudo apt-get update
