@@ -30,8 +30,8 @@ To put the following configuration :
 ##Remove the automatic run of wpa_supplicant :
 
     sudo rm /usr/share/dbus-1/system-services/fi.w1.wpa_supplicant1.service
-    
-    Warning : you may need to also remove (**not necessarly**) :
+
+Warning : you may need to also remove (**not necessarly**) :
     
     sudo rm /usr/share/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service
 
