@@ -21,7 +21,19 @@ To put the following configuration :
     # use manual ip configuration for wlan0 interface and allow hotplug as well
     allow-hotplug wlan0
     iface wlan0 inet manual
+    wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+    
+    #Setting up default with dhcp
+    iface default inet dhcp
+    
 
+##Remove the automatic run of wpa_supplicant :
+
+    sudo rm /usr/share/dbus-1/system-services/fi.w1.wpa_supplicant1.service
+    
+    Warning : you may need to also remove (**not necessarly**) :
+    
+    sudo rm /usr/share/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service
 
 #Installing the dchp server
 
