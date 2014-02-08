@@ -16,7 +16,6 @@ createAdHocNetwork() {
 	#Setting up Ad-Hoc networks
 	iwconfig wlan0 mode Ad-Hoc essid GrowStuff key off
 	ifconfig wlan0 192.168.0.1 broadcast 192.168.0.255 netmask 255.255.255.0
-	#sleep 3 ???
 	service isc-dhcp-server start		#starting the dhcp server
 	echo "Network GrowStuff created"
 }
@@ -26,6 +25,7 @@ connectToWifi() {
 	if [ ! -f  wpa_supplicant.conf ]; then
 		return 0
 	else 
+		./blink.sh blinkfast
 		echo "Connecting to wifi..."
 		service isc-dhcp-server stop	#Stoping the dhcp server
 		pkill wpa_supplicant		#killing wpa_supplicant process before to start a new one
@@ -60,16 +60,19 @@ isConnected() {
 if [ $(whoami) != "root" ]; then
 	echo "You need root privileges to run this script"
 else
+	./blink.sh blinkfast
 	connectToWifi
 	if [ $? -eq 0 ]; then 		#If not connected then setting up Ad-Hoc  and waiting
+		./blink.sh blink
 		createAdHocNetwork
 		sleep 300
 		echo "Trying to reconnect..."	
 	else				#In the other case, watching for connection state change
+		./blink.sh on
 		ok=true
 		while [ $ok ]
 		do
-			sleep 15
+			sleep 30
 			isConnected 2> /dev/null
 			if [ $? -eq 1 ]; then
 				echo "Connection status : ONLINE"
