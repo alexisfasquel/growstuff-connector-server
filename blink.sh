@@ -2,7 +2,9 @@
 
 
 blink() {
-	kill `pgrep blink | head -1` 2> /dev/null	#If already blinking then killing it
+	if [ $(pgrep blink | wc -l) -gt 2 ]; then
+		kill `pgrep blink | head -1`	#If already blinking then killing it
+	fi
 	while [ 1 ]
 	do
 		echo 0 > /sys/class/gpio/gpio11/value
