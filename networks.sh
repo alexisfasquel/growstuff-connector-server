@@ -59,27 +59,30 @@ isConnected() {
 if [ $(whoami) != "root" ]; then
 	echo "You need root privileges to run this script"
 else
-	eval "`dirname $0`/blink.sh blinkfast"
-	connectToWifi
-	if [ $? -eq 0 ]; then 		#If not connected then setting up Ad-Hoc  and waiting
-		eval "`dirname $0`/blink.sh blink"
-		createAdHocNetwork
-		sleep 300
-		echo "Trying to reconnect..."	
-	else				#In the other case, watching for connection state change
-		eval "`dirname $0`/blink.sh on"
-		ok=true
-		while [ $ok ]
-		do
-			sleep 30
-			isConnected 2> /dev/null
-			if [ $? -eq 1 ]; then
-				echo "Connection status : ONLINE"
-			else
-				echo "Connection status : OFFLINE"
-				echo "Trying to reconnect..."
-				ok=false
-			fi
-		done
-	fi
+	while [ 1 ]
+	do
+		eval "`dirname $0`/blink.sh blinkfast"
+		connectToWifi
+		if [ $? -eq 0 ]; then 		#If not connected then setting up Ad-Hoc  and waiting
+			eval "`dirname $0`/blink.sh blink"
+			createAdHocNetwork
+			sleep 300
+			echo "Trying to reconnect..."	
+		else				#In the other case, watching for connection state change
+			eval "`dirname $0`/blink.sh on"
+			ok=true
+			while [ $ok ]
+			do
+				sleep 30
+				isConnected 2> /dev/null
+				if [ $? -eq 1 ]; then
+					echo "Connection status : ONLINE"
+				else
+					echo "Connection status : OFFLINE"
+					echo "Trying to reconnect..."
+					ok=false
+				fi
+			done
+		fi
+	done
 fi
