@@ -22,14 +22,13 @@ createAdHocNetwork() {
 
 
 connectToWifi() {
-	if [ ! -f  wpa_supplicant.conf ]; then
+	if [ ! -f /etc/wpa_supplicant/wpa_supplicant.conf ]; then
 		return 0
 	else 
-		./blink.sh blinkfast
 		echo "Connecting to wifi..."
 		service isc-dhcp-server stop	#Stoping the dhcp server
 		pkill wpa_supplicant		#killing wpa_supplicant process before to start a new one
-		wpa_supplicant -B -iwlan0 -cwpa_supplicant.conf 2> /dev/null
+		wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf 2> /dev/null
 		sleep 1 
 		dhclient wlan0 -r		#Stoping the dhcp client and restarting
 		dhclient wlan0
@@ -60,15 +59,15 @@ isConnected() {
 if [ $(whoami) != "root" ]; then
 	echo "You need root privileges to run this script"
 else
-	./blink.sh blinkfast
+	eval "`dirname $0`/blink.sh blinkfast"
 	connectToWifi
 	if [ $? -eq 0 ]; then 		#If not connected then setting up Ad-Hoc  and waiting
-		./blink.sh blink
+		eval "`dirname $0`/blink.sh blink"
 		createAdHocNetwork
 		sleep 300
 		echo "Trying to reconnect..."	
 	else				#In the other case, watching for connection state change
-		./blink.sh on
+		eval "`dirname $0`/blink.sh on"
 		ok=true
 		while [ $ok ]
 		do
@@ -83,4 +82,4 @@ else
 			fi
 		done
 	fi
-fi  
+fi

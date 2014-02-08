@@ -98,3 +98,4 @@ tail -f /var/log/syslog
 * Deployment script
 * Handeling WEP encryption and unprotected wifi ?
 * Using crontab ?
+* make it a service
