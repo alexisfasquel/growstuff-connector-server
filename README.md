@@ -68,7 +68,7 @@ Then we remove and create a new config file for the server...
     
     host rpi {
         hardware ethernet xx:xx:xx::xx:xx;
-        fixed-address 10.0.0.100;
+        fixed-address 192.168.0.1;
     }
 
 Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
@@ -91,6 +91,8 @@ Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
      
      
 # ROADMAP
+
+tail -f /var/log/syslog
 
 * Do not try to reconnect if there is someone connected to the ad-hoc network
 * Deployment script
