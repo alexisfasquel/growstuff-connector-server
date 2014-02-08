@@ -3,14 +3,14 @@
 
 blink() {
 	if [ "$(pgrep blink | wc -l)" != "2" ]; then
-		exit 0		#If already blinking then exiting
+		kill `pgrep blink | head -1`	#If already blinking then killing it
 	fi
 	while [ 1 ]
-		do
+	do
 		echo 0 > /sys/class/gpio/gpio11/value
-		sleep 1
+		sleep $1
 		echo 1 > /sys/class/gpio/gpio11/value
-		sleep 1
+		sleep $1
 	done
 }
 
@@ -31,7 +31,7 @@ config() {
 	echo out > /sys/class/gpio/gpio11/direction
 }
 
-if [ ! -f /sys/class/gpio/gpio11/direction ]; then
+if [ ! -d /sys/class/gpio/gpio11 ]; then
 	config
 fi
 
@@ -43,6 +43,10 @@ elif [ "$1" = "off" ]; then
 	off
 elif [ "$1" = "blink" ]; then
 	#echo "blinking"
-	blink & > /dev/null
+	blink 1 & > /dev/null
+elif [ "$1" = "blinkfast" ]; then
+	echo "blinking"
+	blink 0.2 & > /dev/null
 fi
+
 
