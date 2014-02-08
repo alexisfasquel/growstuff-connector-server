@@ -43,7 +43,7 @@ elif [ "$1" = "blink" ]; then
 	#echo "blinking"
 	blink 1 & > /dev/null
 elif [ "$1" = "blinkfast" ]; then
-	echo "blinking"
+	#echo "blinking"
 	blink 0.2 & > /dev/null
 fi
 
