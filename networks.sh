@@ -28,7 +28,7 @@ connectToWifi() {
 		echo "Connecting to wifi..."
 		service isc-dhcp-server stop	#Stoping the dhcp server
 		pkill wpa_supplicant		#killing wpa_supplicant process before to start a new one
-		wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf 2> /dev/null
+		wpa_supplicant -B -i wlan0 -c "`dirname $0`/wpa_supplicant.conf" 2> /dev/null
 		sleep 1
 		dhclient wlan0 -r		#Stoping the dhcp client and restarting
 		dhclient wlan0 &
@@ -37,11 +37,11 @@ connectToWifi() {
 			sleep 3
 			isConnected 2> /dev/null
 			if [ $? -eq 1 ]; then
-				echo "Succes !"
+				echo "Success to connnect !"
 				return 1
 			fi
 		done
-		echo "Failed !"
+		echo "ERROR : Connexion failed !"
 		return 0
 	fi
 }
@@ -65,14 +65,14 @@ else
 		if [ $? -eq 0 ]; then 		#If not connected then setting up Ad-Hoc  and waiting
 			eval "`dirname $0`/blink.sh blink"
 			createAdHocNetwork
-			sleep 300
+			sleep 30
 			echo "Trying to reconnect..."	
 		else				#In the other case, watching for connection state change
 			eval "`dirname $0`/blink.sh on"
 			ok=true
 			while [ $ok ]
 			do
-				sleep 30
+				sleep 10
 				isConnected 2> /dev/null
 				if [ $? -eq 1 ]; then
 					echo "Connection status : ONLINE"
