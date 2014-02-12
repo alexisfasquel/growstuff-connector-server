@@ -29,16 +29,15 @@ connectToWifi() {
 		service isc-dhcp-server stop	#Stoping the dhcp server
 		pkill wpa_supplicant		#killing wpa_supplicant process before to start a new one
 		wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf 2> /dev/null
-		sleep 1 
+		sleep 1
 		dhclient wlan0 -r		#Stoping the dhcp client and restarting
-		dhclient wlan0
-		
-		for i in {1..10}
+		dhclient wlan0 &
+		for i in  1 2 3 4 5
 		do
 			sleep 3
 			isConnected 2> /dev/null
 			if [ $? -eq 1 ]; then
-				echo "Succes !"				
+				echo "Succes !"
 				return 1
 			fi
 		done
