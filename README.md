@@ -99,8 +99,8 @@ Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
 
 tail -f /var/log/syslog
 
-* Do not try to reconnect if there is someone connected to the ad-hoc network
 * Deployment script
 * Handeling WEP encryption and unprotected wifi ?
 * Using crontab ?
 * make it a service
+* Adding quote to the WPA_PASSPHRASE calls, to protect against weird PSK
