@@ -27,6 +27,7 @@ To put the following configuration :
     iface default inet dhcp
     
 
+#Hande WPA_SUPPLICANT
 ##Remove the automatic run of wpa_supplicant :
 
     sudo rm /usr/share/dbus-1/system-services/fi.w1.wpa_supplicant1.service
@@ -34,6 +35,10 @@ To put the following configuration :
 Warning : you may need to also remove (**not necessarly**) :
     
     sudo rm /usr/share/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service
+
+###The wpa_supplicant.conf file is located by default here : `/etc/wpa_supplicant/wpa_supplicant.conf`
+Because of privileges issues, this config files has been moved un the same directory as the scripts
+
 
 #Installing the dchp server
 
@@ -67,7 +72,7 @@ Then we remove and create a new config file for the server...
     }
     
     host rpi {
-        hardware ethernet xx:xx:xx::xx:xx;
+        hardware ethernet xx:xx:xx:xx:xx;
         fixed-address 192.168.0.1;
     }
 
@@ -84,8 +89,8 @@ Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
  Adding the following snippet juste before the **exit 0**
      
      cd /home/pi/networks
-     rm -f ynetworks.log
-     sudo ./networks.sh &> networks.log &
+     sudo rm -f networks.log
+     sudo ./networks.sh > networks.log 2>&1 &
      
 **Issue zith the verbose...**
      
