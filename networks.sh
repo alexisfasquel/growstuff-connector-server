@@ -32,7 +32,7 @@ connectToWifi() {
 		sleep 1
 		dhclient wlan0 -r		#Stoping the dhcp client and restarting
 		dhclient wlan0 &
-		for i in  1 2 3 4 5
+		for i in  1 2 3 4 5 6 7 8 9 10
 		do
 			sleep 3
 			isConnected 2> /dev/null
@@ -65,7 +65,8 @@ else
 		if [ $? -eq 0 ]; then 		#If not connected then setting up Ad-Hoc  and waiting
 			eval "`dirname $0`/blink.sh blink"
 			createAdHocNetwork
-			sleep 30
+			sleep  280
+			eval "`dirname $0`/blink.sh blinkfast"
 			echo "Trying to reconnect..."	
 		else				#In the other case, watching for connection state change
 			eval "`dirname $0`/blink.sh on"
