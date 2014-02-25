@@ -82,25 +82,18 @@ Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
 
     sudo update-rc.d -f isc-dhcp-server remove
 
-# Running the script when booting
+# Running the script at startup
 
      sudo nano /etc/rc.local
  
  Adding the following snippet juste before the **exit 0**
      
-     cd /home/pi/networks
-     sudo rm -f networks.log
+     cd $HOME/networks
      sudo ./networks.sh > networks.log 2>&1 &
      
-**Issue zith the verbose...**
-     
-     
 # ROADMAP
-
-tail -f /var/log/syslog
 
 * Deployment script
 * Handeling WEP encryption and unprotected wifi ?
 * Using crontab ?
 * make it a service
-* Adding quote to the WPA_PASSPHRASE calls, to protect against weird PSK

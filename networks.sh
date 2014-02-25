@@ -73,7 +73,7 @@ else
 			ok=true
 			while [ $ok ]
 			do
-				sleep 10
+				sleep 60
 				isConnected 2> /dev/null
 				if [ $? -eq 1 ]; then
 					echo "Connection status : ONLINE"
