@@ -1,99 +1,29 @@
-# Usage
+# Foundation libsass template
 
+This is a template to start your own project that uses Grunt and libsass!
 
-# Setting up the general config of the differents interfaces
+## Requirements
 
-We're editing the interfaces config files :
+You'll need to have the following items installed before continuing.
 
-    sudo nano /etc/network/interfaces
+  * [Node.js](http://nodejs.org): Use the installer provided on the NodeJS website.
+  * [Grunt](http://gruntjs.com/): Run `[sudo] npm install -g grunt-cli`
+  * [Bower](http://bower.io): Run `[sudo] npm install -g bower`
 
-To put the following configuration :
+## Quickstart
 
-    #start interfaces upon start of the system
-    auto lo wlan0
-    # register loopback interface
-    iface lo inet loopback
+```bash
+git clone git@github.com:zurb/foundation-libsass-template.git
+npm install && bower install
+```
 
-    # use dhcp and allow interface to be started when kernel detects a hotplug event
-    allow-hotplug eth0
-    iface eth0 inet dhcp
- 
-    # use manual ip configuration for wlan0 interface and allow hotplug as well
-    allow-hotplug wlan0
-    iface wlan0 inet manual
-    wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
-    
-    #Setting up default with dhcp
-    iface default inet dhcp
-    
+While you're working on your project, run:
 
-#Hande WPA_SUPPLICANT
-##Remove the automatic run of wpa_supplicant :
+`grunt`
 
-    sudo rm /usr/share/dbus-1/system-services/fi.w1.wpa_supplicant1.service
+And you're set!
 
-Warning : you may need to also remove (**not necessarly**) :
-    
-    sudo rm /usr/share/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service
+## Directory Strucutre
 
-###The wpa_supplicant.conf file is located by default here : `/etc/wpa_supplicant/wpa_supplicant.conf`
-Because of privileges issues, this config files has been moved un the same directory as the scripts
-
-
-#Installing the dchp server
-
-    sudo apt-get update
-    sudo apt-get install isc-dhcp-server
-
-#Configuring the dchcp server
-
-We need to edit the init script...
-
-    sudo nano /etc/default/isc-dhcp-server
-    
-...to put the right interface :
-
-    INTERFACES="wlan0"
-   
-Then we remove and create a new config file for the server...
-
-    rm -f /etc/dhcp/dhcpd.conf
-    sudo nano /etc/dhcp/dhcpd.conf
-
-... with the following configuration :
-
-    default-lease-time 600;
-    max-lease-time 7200;
-    
-    subnet 192.168.0.0 netmask 255.255.255.0 {
-      range 192.168.0.10 192.168.0.20;
-      option routers 192.168.0.1;
-      option broadcast-address 192.168.0.255;
-    }
-    
-    host rpi {
-        hardware ethernet xx:xx:xx:xx:xx;
-        fixed-address 192.168.0.1;
-    }
-
-Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
-
-# Preventing the dhcp server from stating when booting
-
-    sudo update-rc.d -f isc-dhcp-server remove
-
-# Running the script at startup
-
-     sudo nano /etc/rc.local
- 
- Adding the following snippet juste before the **exit 0**
-     
-     cd $HOME/networks
-     sudo ./networks.sh > networks.log 2>&1 &
-     
-# ROADMAP
-
-* Deployment script
-* Handeling WEP encryption and unprotected wifi ?
-* Using crontab ?
-* make it a service
+  * `scss/_settings.scss`: Foundation configuration settings go in here
+  * `scss/app.scss`: Application styles go here
