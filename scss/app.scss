@@ -43,6 +43,10 @@
 
 $green-color: #75A928;
 $red-color: #BC1142;
+$white-color: #FFF;
+$grey-color: #EEE;
+$transparent-color: rgba(255, 255, 255, 0.9);
+$shadow-color: rgba(0, 0, 0, 0.12);
 
 body {
     margin-top: 60px;
@@ -56,8 +60,8 @@ body {
 .header {
     line-height: 60px;
     height: 60px;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12);
+    background: $transparent-color;
+    box-shadow: 0 2px 3px $shadow-color;
     
     h1 {
         float: left;
@@ -84,15 +88,46 @@ body {
 
 .content {
     .row {
-            padding: 30px 0 20px 0;
+        padding: 30px 0 20px 0;
+    }
+    h1, h2, h3 {
+        font-weight: 200;
+    }
+    
+    .intro {
+        color: $white-color;
+        background: $red-color;
+        background-image: url('../img/intro_bg.png');
+        background-repeat: no-repeat;
+        background-position: right -200px center;
+        background-size: 500px;
+        
+        h1 {
+            color: $white-color;
+        }
+        a {
+            color: $green-color;    
+        }
+    }
+    
+    .install {
+        background: $grey-color;
+        
+        h1 {
+            color: $white-color;
+        }
+        a {
+            color: $green-color;    
+        }
+    }
+
+    .fork {
+        background: $green-color;
+        background-image: url('../img/fork.png');
+        background-repeat: no-repeat;
+        background-position: top right;
+        background-size: 150px;
     }
 }
 
-.intro {
-    background: $red-color;
-    background-image: url('../img/intro_bg.png');
-    background-repeat: no-repeat;
-    background-position: right -200px center;
-    background-size: 500px;
-}
 
