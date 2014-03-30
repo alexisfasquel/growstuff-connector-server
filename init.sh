@@ -2,7 +2,7 @@
 
 # Dowloading the init branch and unziping
 rm -R /tmp/growstuff-connector-server-init-script 2>/dev/null
-wget https://github.com/alexisfasquel/growstuff-connector-server/archive/init-script.zip
+wget https://github.com/alexisfasquel/growstuff-connector-server/archive/init.zip
 unzip -d /tmp init-script.zip
 rm init-script.zip 2>/dev/null
 
