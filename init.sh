@@ -1,14 +1,13 @@
 #!/bin/sh
 
-echo "`pwd`"
-
 # Dowloading the init branch and unziping
 wget -N https://github.com/alexisfasquel/growstuff-connector-server/archive/init-script.zip
+rm -R growstuff-connector-server-init-script 2>/dev/null
 unzip init-script.zip
 rm init-script.zip 2>/dev/null
 
 # Extracting the res folder
-rm -R growstuff-connector-server-init-script 2>/dev/null
+rm -R ./res
 mv -f growstuff-connector-server-init-script/res ./res
 rm -R growstuff-connector-server-init-script 2>/dev/null
 
