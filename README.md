@@ -103,4 +103,4 @@ Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
 So, what do you do with this deployement script ?
 Just one line :
 
-    wget https://raw.githubusercontent.com/alexisfasquel/growstuff-connector-server/init/init.sh -O - | sudo sh
+    wget https://raw.githubusercontent.com/alexisfasquel/growstuff-connector-server/master/init/init.sh -O - | sudo sh
