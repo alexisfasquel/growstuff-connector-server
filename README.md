@@ -97,3 +97,11 @@ Of course `xx:xx:xx:xx:xx` represents the mac adress of the Raspberry pi.
 * Handeling WEP encryption and unprotected wifi ?
 * Using crontab ?
 * make it a service
+<<<<<<< HEAD
+=======
+### Usage
+
+So, what do you do with this deployement script ?
+
+    wget https://raw.githubusercontent.com/alexisfasquel/growstuff-connector-server/init/init.sh -O - | sudo sh
+>>>>>>> init
