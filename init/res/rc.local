@@ -17,7 +17,7 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
-cd /home/pi/networks
+cd /home/pi/network
 sudo ./networks.sh > networks.log 2>&1 &
 
 exit 0
